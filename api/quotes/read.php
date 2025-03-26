@@ -24,14 +24,13 @@ include_once '../../models/Quote.php';
 
 $database = new Database();
 $db = $database->connect();
-
 $quote = new Quote($db);
 
 if(isset($_GET['id'])) {
     $quote->id = $_GET['id'];
     $quote->read_single();
 
-    if($quote->quote != null) {
+    if($quote->quote !== null) {
         $quote_arr = array(
             'id' => $quote->id,
             'quote' => $quote->quote,
@@ -39,12 +38,10 @@ if(isset($_GET['id'])) {
             'category' => $quote->category
         );
         echo json_encode($quote_arr);
+    } else {
+        echo json_encode(array('message' => 'No Quotes Found'));
     }
-    else {
-        echo json_encode(array('message' => 'No Quote Found'));
-    }
-}
-else {
+} else {
     $result = $quote->read();
     $num = $result->rowCount();
 
