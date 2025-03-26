@@ -15,8 +15,6 @@
   $db = $database->connect();
   $category = new Category($db);
 
-$method = $_SERVER['REQUEST_METHOD'];
-
 switch($method) {
     case 'GET':
         if (isset($_GET['id'])) {
