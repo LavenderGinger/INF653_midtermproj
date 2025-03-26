@@ -21,7 +21,7 @@ include_once '../../models/Category.php';
   
   $author_arr = array (
       'id' => $category->id,
-      'category' => $category->category
+      'author' => $category->category
   );
   
   print_r(json_encode($category_arr));

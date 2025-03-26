@@ -21,7 +21,7 @@ $author->read_single($author->id);
 
 $author_arr = array (
     'id' => $author->id,
-    'category' => $author->author
+    'author' => $author->author
 );
 
 print_r(json_encode($author_arr));
