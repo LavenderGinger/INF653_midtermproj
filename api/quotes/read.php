@@ -16,60 +16,24 @@ $database = new Database();
 $db = $database->connect();
 $quote = new Quote($db);
 
-if (isset($_GET['id'])) {
-    $quote->id = $_GET['id'];
-    $quote->read_single();
+$data = json_decode(file_get_contents("php://input"));
 
-    if ($quote->quote !== null) {
-        echo json_encode([
-            'id' => $quote->id,
-            'quote' => $quote->quote,
-            'author' => $quote->author,
-            'category' => $quote->category,
-        ]);
-    }
-    else {
-        echo json_encode(['message' => 'No Quotes Found']);
-    }
-}
-elseif (isset($_GET['author_id']) || isset($_GET['category_id'])) {
-    $author_id = $_GET['author_id'] ?? null;
-    $category_id = $_GET['category_id'] ?? null;
-    $result = $quote->read_filtered($author_id, $category_id);
+$quote = $data->quote ?? null;
+$author_id = $data->author_id ?? null;
+$category_id = $data->category_id ?? null;
 
-    if ($result->rowCount() > 0) {
-        $quotes_arr = [];
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
-            array_push($quotes_arr, [
-                'id' => $id,
-                'quote' => $quote,
-                'author' => $author,
-                'category' => $category,
-            ]);
-        }
-        echo json_encode($quotes_arr);
-    }
-    else {
-        echo json_encode([]);
-    }
+if ($quote === null || $author_id === null || $category_id === null) {
+    echo json_encode(['message' => 'Missing required fields']);
+    exit();
 }
-else {
-    $result = $quote->read();
-    if ($result->rowCount() > 0) {
-        $quotes_arr = [];
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
-            array_push($quotes_arr, [
-                'id' => $id,
-                'quote' => $quote,
-                'author' => $author,
-                'category' => $category,
-            ]);
-        }
-        echo json_encode($quotes_arr);
-    } 
-    else {
-        echo json_encode([]);
-    }
+
+$quote_obj = new Quote($db);
+$quote_obj->quote = $quote;
+$quote_obj->author_id = $author_id;
+$quote_obj->category_id = $category_id;
+
+if ($quote_obj->create()) {
+    echo json_encode(['message' => 'Quote created successfully']);
+} else {
+    echo json_encode(['message' => 'Failed to create quote']);
 }
