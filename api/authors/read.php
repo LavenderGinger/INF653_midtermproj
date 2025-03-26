@@ -37,7 +37,7 @@ else {
             extract($row);
             array_push($authors_arr, [
                 'id' => $id,
-                'author' => $name,
+                'author' => $author,
             ]);
         }
         echo json_encode($authors_arr);
