@@ -19,7 +19,7 @@ class Author {
     }
 
     public function read_single($id) {
-        $query = 'SELECT id, author FROM' . $this->table . ' WHERE id = ?;
+        $query = 'SELECT id, author FROM' . $this->table . ' WHERE id = ?';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
