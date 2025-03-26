@@ -6,6 +6,7 @@
     private $password;
     private $conn;
     private $port;
+    private $db_name;
 
     public function __construct() {
       $this->username = getenv('USERNAME');
