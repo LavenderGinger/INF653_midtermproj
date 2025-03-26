@@ -21,7 +21,7 @@
         return $this->conn;
       }
       else {
-        $dsn = "postgresql://quotesdb_ykmh_user:8cAZMRJdgq9jyYLUOtyi70O39pLfP9Lj@dpg-cv89lud2ng1s73duh81g-a.oregon-postgres.render.com/quotesdb_ykmh;port={$this->port};dbname={$this->db_name};";
+        $dsn = "pgsql:host={$this->host};port={$this->port};dbname={$this->dbname}";
         try { 
           $this->conn = new PDO($dsn, $this->username, $this->password);
           $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
