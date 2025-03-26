@@ -36,15 +36,15 @@ class Quote {
     }
 
     public function create() {
-        $query = 'INSERT INTO ' . $this->table . ' (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)';
+        $query = 'INSERT INTO quotes (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)';
         $stmt = $this->conn->prepare($query);
+        if (!$this->quote || !$this->author_id || !$this->category_id) {
+            return false;
+        }
         $stmt->bindParam(':quote', $this->quote);
         $stmt->bindParam(':author_id', $this->author_id);
         $stmt->bindParam(':category_id', $this->category_id);
-        if($stmt->execute()) {
-            return true;
-        }
-        return false;
+        return $stmt->execute();
     }
 
     public function update() {

@@ -15,15 +15,25 @@ include_once '../../models/Quote.php';
   $db = $database->connect();
   $quote = new Quote($db);
 
-$data = json_decode(file_get_contents("php://input"));
-
-        $quote->quote = $data->quote;
-        $quote->author_id = $data->author_id;
-        $quote->category_id = $data->category_id;
-
-        if ($quote->create()) {
-            echo json_encode(array('message' => 'Quote created'));
-        }
-        else {
-            echo json_encode(array('message' => 'Quote not created'));
-        }
+  php
+  $data = json_decode(file_get_contents("php://input"));
+  
+  $quote = $data->quote ?? null;
+  $author_id = $data->author_id ?? null;
+  $category_id = $data->category_id ?? null;
+  
+  if ($quote === null || $author_id === null || $category_id === null) {
+      echo json_encode(['message' => 'Missing required fields']);
+      exit();
+  }
+  
+  $quote_obj = new Quote($db);
+  $quote_obj->quote = $quote;
+  $quote_obj->author_id = $author_id;
+  $quote_obj->category_id = $category_id;
+  
+  if ($quote_obj->create()) {
+      echo json_encode(['message' => 'Quote created successfully']);
+  } else {
+      echo json_encode(['message' => 'Failed to create quote']);
+  }  
