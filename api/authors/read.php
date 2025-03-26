@@ -8,7 +8,6 @@ if($method === 'OPTIONS') {
     header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
     exit();
 }
-
 include_once '../../config/Database.php';
 include_once '../../models/Author.php';
 
@@ -16,24 +15,34 @@ $database = new Database();
 $db = $database->connect();
 $author = new Author($db);
 
-$result = $author->read();
-$num = $result->rowCount();
+if (isset($_GET['id'])) {
+    $author->id = $_GET['id'];
+    $author->read_single();
 
-if($num>0){
-    $authors_arr = array();
-
-    while($row=$result->fetch(PDO::FETCH_ASSOC)){
-        print_r($row);
-        extract($row);
-        $author_item = array(
-            'id'=>$id,
-            'author'=>$author
-        );
-        array_push($authors_arr, $author_item);
+    if ($author->name !== null) {
+        echo json_encode([
+            'id' => $author->id,
+            'author' => $author->name,
+        ]);
     }
-    echo json_encode($authors_arr);
-} 
+    else {
+        echo json_encode(['message' => 'Author Not Found']);
+    }
+}
 else {
-    echo json_encode(array('message' => 'No Authors Found')
-    );
+    $result = $author->read();
+    if ($result->rowCount() > 0) {
+        $authors_arr = [];
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            array_push($authors_arr, [
+                'id' => $id,
+                'author' => $name,
+            ]);
+        }
+        echo json_encode($authors_arr);
+    }
+    else {
+        echo json_encode([]);
+    }
 }

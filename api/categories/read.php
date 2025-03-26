@@ -8,29 +8,41 @@ if($method === 'OPTIONS') {
     header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
     exit();
 }
+
 include_once '../../config/Database.php';
 include_once '../../models/Category.php';
 
-  $database = new Database();
-  $db = $database->connect();
-  $category = new Category($db);
+$database = new Database();
+$db = $database->connect();
+$category = new Category($db);
 
-  $result = $category->read();
-$num = $result->rowCount();
+if (isset($_GET['id'])) {
+    $category->id = $_GET['id'];
+    $category->read_single();
 
-if($num > 0){
-    $categories_arr = array();
-    $categories_arr['data'] = array();
-
-    while($row = $result->fetch(PDO::FETCH_ASSOC)){
-        $category_item = array(
-            'id' => $row['id'],
-            'category' => $row['category']
-        );
-        array_push($categories_arr['data'], $category_item);
+    if ($category->name !== null) {
+        echo json_encode([
+            'id' => $category->id,
+            'category' => $category->name,
+        ]);
     }
-    echo json_encode($categories_arr);
-} 
-else {
-    echo json_encode(array('message' => 'No Categories Found'));
+    else {
+        echo json_encode(['message' => 'Category Not Found']);
+    }
+} else {
+    $result = $category->read();
+    if ($result->rowCount() > 0) {
+        $categories_arr = [];
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            extract($row);
+            array_push($categories_arr, [
+                'id' => $id,
+                'category' => $name,
+            ]);
+        }
+        echo json_encode($categories_arr);
+    }
+    else {
+        echo json_encode([]);
+    }
 }
