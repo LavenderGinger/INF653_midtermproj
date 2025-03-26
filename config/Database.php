@@ -11,7 +11,7 @@
     public function __construct() {
       $this->username = getenv('USERNAME');
       $this->password = getenv('PASSWORD');
-      $this->db_name = getenv('DBNAME');
+      $this->dbname = getenv('DBNAME');
       $this->host = getenv('HOST');
     }
 
