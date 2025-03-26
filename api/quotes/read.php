@@ -29,6 +29,10 @@
 
       while($row=$result->fetch(PDO::FETCH_ASSOC)){
           extract($row);
+          $id = $row['id'];
+        $quote = $row['quote'];
+        $author = $row['author'] ?? null;
+        $category = $row['category'] ?? null;
 
           $quote_item = array(
               'id'=>$id,
