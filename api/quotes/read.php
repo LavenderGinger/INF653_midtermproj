@@ -16,21 +16,18 @@ $database = new Database();
 $db = $database->connect();
 $quote = new Quote($db);
 
-$result = $quote->read();
-$num = $result->rowCount();
+$quote->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-if ($num > 0) {
-    $quotes = [];
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        $quotes[] = [
-            'id' => $row['id'],
-            'quote' => $row['quote'],
-            'author' => $row['author'] ?? null,
-            'category' => $row['category'] ?? null,
-        ];
-    }
-    echo json_encode($quotes);
+$quote->read_single();
+
+if($quote->quote != null) {
+    $quote_arr = array(
+        'id' => $quote->id,
+        'quote' => $quote->quote,
+        'author' => $quote->author,
+        'category' => $quote->category
+    );
+    echo json_encode($quote_arr);
 } else {
-    echo json_encode([]);
+    echo json_encode(array('message' => 'No Quote Found'));
 }
-?>
