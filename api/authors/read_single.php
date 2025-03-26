@@ -17,7 +17,7 @@ $author = new Author($db);
 
 $author->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-$author->read_single();
+$author->read_single($author->id);
 
 $author_arr = array (
     'id' => $author->id,
