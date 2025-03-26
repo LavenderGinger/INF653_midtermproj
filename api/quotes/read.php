@@ -98,10 +98,11 @@ if(isset($_GET['id'])) {
     $author->name = $data->name;
 
 if($author->create()) {
-    echo json_encode(array('message' => 'Author Created');
+    echo json_encode(array('message' => 'Author Created'));
 }
 else {
     echo json_encode(array('message' => 'Author Not Created'));
 }
 }
 }
+
