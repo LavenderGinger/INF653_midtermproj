@@ -1,9 +1,9 @@
-SetEnv USERNAME "quotesdb_ykmh_user"
+USERNAME = "quotesdb_ykmh_user"
 
-SetEnv PASSWORD "8cAZMRJdgq9jyYLUOtyi70O39pLfP9Lj"
+PASSWORD ="8cAZMRJdgq9jyYLUOtyi70O39pLfP9Lj"
 
-SetEnv DBNAME "quotesdb_ykmh"
+DBNAME =  "quotesdb_ykmh"
 
-SetEnv HOST "dpg-cv89lud2ng1s73duh81g-a"
+HOST = "dpg-cv89lud2ng1s73duh81g-a"
 
-SetEnv PORT "5432"
+PORT = "5432"
