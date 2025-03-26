@@ -34,7 +34,7 @@ else {
     if ($result->rowCount() > 0) {
         $authors_arr = [];
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            //extract($row);
+            extract($row);
             array_push($authors_arr, [
                 'id' => $id,
                 'author' => $name,
