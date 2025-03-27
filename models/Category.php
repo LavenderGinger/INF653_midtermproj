@@ -11,14 +11,21 @@ class Category {
     }
 
     public function read($id = null, $category = null) {
-        $query = 'SELECT * FROM ' . $this->table;
+        $query = 'SELECT id, category as name
+                FROM ' . $this->table . '
+                ORDER BY id';
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
     public function read_single($id) {
-        $query = 'SELECT * FROM ' . $this->table . ' WHERE id = :id LIMIT 0,1';
+        $query = 'SELECT
+            id,
+            category as name
+          FROM
+            ' . $this->table . '
+        WHERE id = :id';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();

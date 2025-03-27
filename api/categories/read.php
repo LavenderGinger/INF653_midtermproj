@@ -8,7 +8,7 @@ $category = new Category($db);
 
 if (isset($_GET['id'])) {
     $category->id = $_GET['id'];
-    $category->read_single();
+    $category->read_single($category->id);
 
     if ($category->name !== null) {
         echo json_encode([

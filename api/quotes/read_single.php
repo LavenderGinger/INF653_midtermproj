@@ -15,7 +15,7 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
 
 $result = $quote->read_single($quote->id);
 if (empty($result)) {
-    echo json_encode(['message' => 'No quotes found.']);
+    echo json_encode(['message' => 'No Quotes Found']);
     exit();
 }
 

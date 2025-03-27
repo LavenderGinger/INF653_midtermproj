@@ -8,11 +8,15 @@ include_once '../../models/Category.php';
 
   $category->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-  $author->read_single();
-  
-  $author_arr = array (
+$category->read_single();
+
+$category_arr = array (
       'id' => $category->id,
       'author' => $category->category
   );
+if (empty($author_arr)) {
+    echo json_encode(['message' => 'category_id Not Found']);
+    exit();
+}
   
   print_r(json_encode($category_arr));
