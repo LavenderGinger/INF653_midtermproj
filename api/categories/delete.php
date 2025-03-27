@@ -9,7 +9,7 @@ $category = new Category($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if (!isset($data->id) || empty($data->id)) {
-    die(json_encode(["error" => "ID is required"]));
+    die(json_encode(["id" => "ID is required"]));
 }
 
 $category->id = $data->id;
