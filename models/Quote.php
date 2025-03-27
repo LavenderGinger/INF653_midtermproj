@@ -42,7 +42,7 @@ class Quote {
             $this->quote = $row['quote'];
             $this->author = $row['author_name'];
             $this->category = $row['category_name'];
-            return $row;
+            return $this;
         }
         return null;
     }
