@@ -51,13 +51,13 @@ class Quote {
         $query = 'INSERT INTO quotes (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)';
         $stmt = $this->conn->prepare($query);
         
-        if (!$this->quote || !$this->author_id || !$this->category_id) {
+        if (!$this->quote || !$this->author || !$this->category) {
             return false;
         }
         
         $stmt->bindParam(':quote', $this->quote);
-        $stmt->bindParam(':author_id', $this->author_id);
-        $stmt->bindParam(':category_id', $this->category_id);
+        $stmt->bindParam(':author_id', $this->author);
+        $stmt->bindParam(':category_id', $this->category);
         
         return $stmt->execute();
     }
@@ -66,8 +66,8 @@ class Quote {
         $query = 'UPDATE ' . $this->table . ' SET quote = :quote, author_id = :author_id, category_id = :category_id WHERE id = :id';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':quote', $this->quote);
-        $stmt->bindParam(':author_id', $this->author_id);
-        $stmt->bindParam(':category_id', $this->category_id);
+        $stmt->bindParam(':author_id', $this->author);
+        $stmt->bindParam(':category_id', $this->category);
         $stmt->bindParam(':id', $this->id);
         if($stmt->execute()) {
             return true;
