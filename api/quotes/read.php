@@ -23,8 +23,8 @@ if($num>0){
         $quote_item = array(
             'id'=>$id,
             'quote'=>$quote,
-            'author'=>$author,
-            'category'=>$category
+            'author'=>$author_name,
+            'category'=>$category_name
         );
         array_push($quotes_arr['data'], $quote_item);
     }
