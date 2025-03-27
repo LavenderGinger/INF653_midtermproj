@@ -9,7 +9,7 @@ include_once '../../models/Author.php';
   $data = json_decode(file_get_contents("php://input"));
 
 if (!isset($data->author_id) || empty($data->author_id)) {
-    die(json_encode(["error" => "ID is required"]));
+    die(json_encode(["id" => "ID is required"]));
 }
 
     $author->id = $data->author_id;
@@ -17,5 +17,5 @@ if (!isset($data->author_id) || empty($data->author_id)) {
             echo json_encode(array('id' => 'Author deleted'));
         }
         else {
-            echo json_encode(array('id' => 'Author not deleted'));
+            echo json_encode(array('message' => 'Author not deleted'));
         }
