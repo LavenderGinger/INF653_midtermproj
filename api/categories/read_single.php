@@ -14,10 +14,10 @@ $category_arr = array (
       'id' => $category->id,
       'author' => $category->category
   );
-if (empty($author_arr)) {
+if (empty($category)) {
     echo json_encode(['message' => 'category_id Not Found']);
     exit();
 }
 else {
-    echo json_encode($author_arr);
+    echo json_encode($category_arr);
 }
