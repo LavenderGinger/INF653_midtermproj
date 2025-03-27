@@ -25,7 +25,14 @@ class Quote {
     }
 
     public function read_single($id) {
-        $query = 'SELECT * FROM ' . $this->table . ' WHERE id = :id LIMIT 0,1';
+        $query = 'SELECT a.author as author_name, c.category as category_name, q.id, q.author_id, q.category_id, q.quote
+      FROM ' . $this->table . ' q
+      LEFT JOIN
+        authors a ON q.author_id = a.id
+      LEFT JOIN
+        categories c ON q.category_id = c.id
+      WHERE q.id = :id;
+      ';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -33,8 +40,8 @@ class Quote {
         if($row) {
             $this->id = $row['id'];
             $this->quote = $row['quote'];
-            $this->author_id = $row['author_id'];
-            $this->category_id = $row['category_id'];
+            $this->author = $row['author_name'];
+            $this->category = $row['category_name'];
             return $row;
         }
         return null;
