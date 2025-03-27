@@ -9,9 +9,7 @@ include_once '../../models/Category.php';
 $data = json_decode(file_get_contents("php://input"));
 
         $category->category = $data->category;
-        if ($category->create()) {
-            echo json_encode(array('message' => 'Category created'));
-        }
-        else {
-            echo json_encode(array('message' => 'Category not created'));
-        }
+
+echo json_encode(
+    array('id' => $category->create(), 'category' => $category->category)
+);

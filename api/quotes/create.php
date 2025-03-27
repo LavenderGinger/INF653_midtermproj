@@ -13,7 +13,7 @@ include_once '../../models/Quote.php';
   $category_id = $data->category_id ?? null;
   
   if ($quote === null || $author_id === null || $category_id === null) {
-      echo json_encode(['message' => 'Missing required fields']);
+      echo json_encode(['message' => 'Missing Required Parameters']);
       exit();
   }
   
@@ -21,9 +21,7 @@ include_once '../../models/Quote.php';
   $quote_obj->quote = $quote;
   $quote_obj->author = $author_id;
   $quote_obj->category = $category_id;
-  
-  if ($quote_obj->create()) {
-      echo json_encode(['message' => 'Quote created successfully']);
-  } else {
-      echo json_encode(['message' => 'Failed to create quote']);
-  }  
+
+    echo json_encode(
+        array('id' => $quote_obj->create(), 'quote' => $quote_obj->quote, 'author_id' => $quote_obj->author, 'category_id' => $quote_obj->category)
+    );
