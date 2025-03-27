@@ -10,8 +10,8 @@ include_once '../../models/Quote.php';
 
     $quote->id = $data->id;
         if ($quote->delete()) {
-            echo json_encode(array('message' => 'Quote deleted'));
+            echo json_encode(array('id' => 'No Quotes Found'));
         }
         else {
-            echo json_encode(array('message' => 'Quote not deleted'));
+            echo json_encode(array('id' => 'No Quotes Found'));
         }

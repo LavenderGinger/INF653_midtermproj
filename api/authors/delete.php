@@ -14,8 +14,8 @@ if (!isset($data->author_id) || empty($data->author_id)) {
 
     $author->id = $data->author_id;
         if ($author->delete()) {
-            echo json_encode(array('message' => 'Author deleted'));
+            echo json_encode(array('id' => 'Author deleted'));
         }
         else {
-            echo json_encode(array('message' => 'Author not deleted'));
+            echo json_encode(array('id' => 'Author not deleted'));
         }
