@@ -5,8 +5,8 @@ class Quote {
 
     public $id;
     public $quote;
-    public $author_id;
-    public $category_id;
+    public $author;
+    public $category;
 
     public function __construct($db) {
         $this->conn = $db;
