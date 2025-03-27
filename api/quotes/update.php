@@ -37,6 +37,15 @@ if (empty($result)) {
     exit();
 }
 
+$result = null;
+
+$quoter = new Quote($db);
+$result = $quoter->read_single($quote->id);
+if (empty($result)) {
+    echo json_encode(['message' => 'No Quotes Found']);
+    exit();
+}
+
   if ($quote->update()) {
       echo json_encode(array('id' => $quote->id  , 'quote' =>   $data->quote, 'author_id' => $quote->author, 'category_id' => $quote->category));
   }

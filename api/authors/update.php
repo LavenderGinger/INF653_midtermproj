@@ -10,7 +10,7 @@ $data = json_decode(file_get_contents("php://input"));
         $author->id = $data->id ?? null;
         $author->author = $data->author ?? null;
 
-if ($author->id  === null || $author->author) {
+if ($author->id  === null || $author->author  === null) {
     echo json_encode(['message' => 'Missing Required Parameters']);
     exit();
 }

@@ -10,7 +10,7 @@ include_once '../../models/Category.php';
   $category->id = $data->id ?? null;
   $category->category = $data->category ?? null;
 
-if ($category->id  === null || $category->category) {
+if ($category->id  === null || $category->category  === null) {
     echo json_encode(['message' => 'Missing Required Parameters']);
     exit();
 }
