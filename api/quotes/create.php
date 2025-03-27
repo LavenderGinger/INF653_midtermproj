@@ -5,6 +5,8 @@ include_once '../../models/Quote.php';
   $database = new Database();
   $db = $database->connect();
   $quote = new Quote($db);
+  $author = new Author($db);
+  $category = new Category($db);
 
   $data = json_decode(file_get_contents("php://input"));
   
@@ -16,7 +18,23 @@ include_once '../../models/Quote.php';
       echo json_encode(['message' => 'Missing Required Parameters']);
       exit();
   }
-  
+
+    $result = $author->read_single($author_id);
+
+    if (empty($result)) {
+        echo json_encode(['message' => 'author_id Not Found']);
+        exit();
+    }
+
+    $result = null;
+
+    $result = $category->read_single($category_id);
+
+    if (empty($result)) {
+        echo json_encode(['message' => 'category_id Not Found']);
+        exit();
+    }
+
   $quote_obj = new Quote($db);
   $quote_obj->quote = $quote;
   $quote_obj->author = $author_id;
