@@ -1,14 +1,4 @@
 <?php
-  header('Access-Control-Allow-Origin: *');
-  header('Content-Type: application/json');
-  $method = $_SERVER ['REQUEST_METHOD'];
-
-  if ($method === 'OPTIONS') {
-    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-    header('Access-Control-Allow-Headers: Origin, Accept, Content-Type, X-Requested-With');
-    exit();
-  }
-
 include_once '../../config/Database.php';
 include_once '../../models/Quote.php';
 
@@ -16,24 +6,30 @@ $database = new Database();
 $db = $database->connect();
 $quote = new Quote($db);
 
-$data = json_decode(file_get_contents("php://input"));
+$id = isset($_GET['id']) ? $_GET['id'] : null;
+$author_id = isset($_GET['author_id']) ? $_GET['author_id'] : null;
+$category_id = isset($_GET['category_id']) ? $_GET['category_id'] : null;
 
-$quote = $data->quote ?? null;
-$author_id = $data->author_id ?? null;
-$category_id = $data->category_id ?? null;
+$result = $quote->read();
+$num = $result->rowCount();
 
-if ($quote === null || $author_id === null || $category_id === null) {
-    echo json_encode(['message' => 'Missing required fields']);
-    exit();
+if($num>0){
+    $quotes_arr = array();
+    $quotes_arr['data']=array();
+
+    while($row=$result->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+
+        $quote_item = array(
+            'id'=>$id,
+            'quote'=>$quote,
+            'author'=>$author,
+            'category'=>$category
+        );
+        array_push($quotes_arr['data'], $quote_item);
+    }
+    echo json_encode($quotes_arr);
 }
-
-$quote_obj = new Quote($db);
-$quote_obj->quote = $quote;
-$quote_obj->author_id = $author_id;
-$quote_obj->category_id = $category_id;
-
-if ($quote_obj->create()) {
-    echo json_encode(['message' => 'Quote created successfully']);
-} else {
-    echo json_encode(['message' => 'Failed to create quote']);
+else {
+    echo json_encode(array('message' => 'No Quotes Found'));
 }
