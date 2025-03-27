@@ -19,9 +19,9 @@ class Author {
     }
 
     public function read_single($id) {
-        $query = 'SELECT id, author FROM ' . $this->table . ' WHERE id = ?';
+        $query = 'SELECT id, author FROM ' . $this->table . ' WHERE id = :id';
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $id);
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
