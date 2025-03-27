@@ -10,14 +10,14 @@ include_once '../../models/Category.php';
 
 $category->read_single($category->id);
 
-$category_arr = array (
-      'id' => $category->id,
-      'author' => $category->category
-  );
 if (empty($category)) {
     echo json_encode(['message' => 'category_id Not Found']);
     exit();
 }
 else {
+    $category_arr = array (
+        'id' => $category->id,
+        'category' => $category->category
+    );
     echo json_encode($category_arr);
 }

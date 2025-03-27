@@ -33,10 +33,10 @@ class Category {
         if($row) {
             $this->id = $row['id'];
             $this->category = $row['category'];
+            return $this;
         }
-        else {
-            echo json_encode(['message' => 'No Categories Found']);
-        }
+        else
+            return null;
     }
 
     public function create() {

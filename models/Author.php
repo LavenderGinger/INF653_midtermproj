@@ -29,9 +29,10 @@ class Author {
         if($row) {
             $this->id = $row['id'];
             $this->author = $row['author'];
+            return $this;
         }
         else {
-            echo json_encode(['message' => 'No Authors Found']);
+            return null;
         }
     }
 
