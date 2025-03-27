@@ -7,8 +7,14 @@ include_once '../../models/Category.php';
   $category = new Category($db);
 
   $data = json_decode(file_get_contents("php://input"));
-  $category->id = $data->id;
-  $category->category = $data->category;
+  $category->id = $data->id ?? null;
+  $category->category = $data->category ?? null;
+
+if ($category->id  === null || $category->category) {
+    echo json_encode(['message' => 'Missing Required Parameters']);
+    exit();
+}
+
   if ($category->update()) {
       echo json_encode(array('id' => $category->id  , 'category' => $category->category));
   }
