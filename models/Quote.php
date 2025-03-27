@@ -79,9 +79,16 @@ class Quote {
         $query = 'DELETE FROM ' . $this->table . ' WHERE id = :id';
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $this->id);
-        $result = $stmt->execute();
-        $num = $result->rowCount();
-        if($num == 1) {
+
+        $database = new Database();
+        $db = $database->connect();
+        $quote = new Quote($db);
+        $result = $quote->read_single($this->id);
+        if (empty($result)) {
+            return false;
+        }
+
+        if($stmt->execute()) {
             return true;
         }
         return false;
