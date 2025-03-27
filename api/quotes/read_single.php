@@ -18,5 +18,6 @@ if (empty($result)) {
     echo json_encode(['message' => 'No Quotes Found']);
     exit();
 }
-
-echo json_encode($result);
+else {
+    echo json_encode($result);
+}

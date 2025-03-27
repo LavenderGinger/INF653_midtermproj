@@ -18,5 +18,6 @@ if (empty($author_arr)) {
     echo json_encode(['message' => 'author_id Not Found']);
     exit();
 }
-
-echo json_encode($author_arr);
+else {
+    echo json_encode($author_arr);
+}

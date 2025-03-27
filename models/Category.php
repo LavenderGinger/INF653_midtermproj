@@ -22,7 +22,7 @@ class Category {
     public function read_single($id) {
         $query = 'SELECT
             id,
-            category as name
+            category
           FROM
             ' . $this->table . '
         WHERE id = :id';
