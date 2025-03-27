@@ -13,7 +13,7 @@ class Quote {
     }
 
     public function read() {
-        $query = 'SELECT q.quote, q.author_id, q.category_id FROM ' . $this->table . ' d
+        $query = 'SELECT q.quote, q.author_id, q.category_id FROM ' . $this->table . ' q
         LEFT JOIN
            authors a on q.author_id = a.id 
         LEFT JOIN
