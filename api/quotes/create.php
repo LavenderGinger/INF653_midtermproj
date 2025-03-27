@@ -19,8 +19,8 @@ include_once '../../models/Quote.php';
   
   $quote_obj = new Quote($db);
   $quote_obj->quote = $quote;
-  $quote_obj->author_id = $author_id;
-  $quote_obj->category_id = $category_id;
+  $quote_obj->author = $author_id;
+  $quote_obj->category = $category_id;
   
   if ($quote_obj->create()) {
       echo json_encode(['message' => 'Quote created successfully']);
