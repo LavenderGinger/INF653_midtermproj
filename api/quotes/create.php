@@ -6,7 +6,6 @@ include_once '../../models/Quote.php';
   $db = $database->connect();
   $quote = new Quote($db);
 
-  php
   $data = json_decode(file_get_contents("php://input"));
   
   $quote = $data->quote ?? null;
